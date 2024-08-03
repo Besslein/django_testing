@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 
 from notes.tests.config import (
-    BaseClass,
+    BaseTestClass,
     HOME_URL,
     LIST_URL,
     ADD_URL,
