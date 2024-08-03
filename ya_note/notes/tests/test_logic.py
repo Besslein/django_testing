@@ -22,8 +22,9 @@ class TestNoteCreation(BaseTestClass, TestCase):
     def test_user_can_create_note(self):
         Note.objects.all().delete()
         self.author_client.post(ADD_URL, data=self.form_data)
-        notes_cout = Note.objects.count()
-        self.assertEqual(self.notes_cout)
+        notes_count_before = Note.objects.count()
+        notes_count_after = Note.objects.count()
+        self.assertEqual(notes_count_before, notes_count_after)
         new_note = Note.objects.get()
         self.assertEqual(new_note.title, self.form_data['title'])
         self.assertEqual(new_note.text, self.form_data['text'])
@@ -40,8 +41,9 @@ class TestNoteCreation(BaseTestClass, TestCase):
         Note.objects.all().delete()
         del self.form_data['slug']
         self.author_client.post(ADD_URL, data=self.form_data)
-        note_count = Note.objects.count()
-        self.assertEqual(self.note_count)
+        note_count_before = Note.objects.count()
+        note_count_after = Note.objects.count()
+        self.assertEqual(note_count_before, note_count_after)
         new_note = Note.objects.get()
         expected_slug = slugify(self.form_data['title'])
         self.assertEqual(new_note.slug, expected_slug)
