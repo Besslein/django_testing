@@ -20,7 +20,7 @@ from notes.tests.config import (
 User = get_user_model()
 
 
-class TestRoutes(BaseClass, TestCase):
+class TestRoutes(BaseTestClass, TestCase):
 
     def test_availability_for_note_edit_and_delete(self):
         users_notes = (
