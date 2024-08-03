@@ -20,7 +20,7 @@ LOGOUT_URL = reverse('users:logout')
 SIGNUP_URL = reverse('users:signup')
 
 
-class BaseClass(TestCase):
+class BaseTestClass(TestCase):
     NOTE_TITLE = 'Заголовок заметки'
     NOTE_TEXT = 'Текст заметки'
     NOTE_SLUG = SLUG

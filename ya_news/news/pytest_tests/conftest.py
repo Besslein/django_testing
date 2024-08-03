@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 import pytest
 from django.conf import settings
@@ -60,7 +60,7 @@ def comments(news, author):
 
 @pytest.fixture
 def news_list():
-    today = datetime.today()
+    today = timezone.now()
     all_news = [
         News(
             title=f'Новость {index}',
@@ -70,34 +70,3 @@ def news_list():
         for index in range(settings.NEWS_COUNT_ON_HOME_PAGE + 1)
     ]
     News.objects.bulk_create(all_news)
-
-
-@pytest.fixture
-def url_to_comments(news):
-    news_url = reverse('news:detail', args=(news.id,))
-    return news_url + '#comments'
-
-
-@pytest.fixture
-def edit_url(comment):
-    return reverse('news:edit', args=(comment.id,))
-
-
-@pytest.fixture
-def delete_url(comment):
-    return reverse('news:delete', args=(comment.id,))
-
-
-@pytest.fixture
-def news_detail_url(news):
-    return reverse('news:detail', args=(news.id,))
-
-
-@pytest.fixture
-def news_home_url():
-    return reverse('news:home')
-
-
-@pytest.fixture
-def login_url():
-    return reverse('users:login')

@@ -23,7 +23,7 @@ class TestNoteCreation(BaseClass, TestCase):
         Note.objects.all().delete()
         self.author_client.post(ADD_URL, data=self.form_data)
         notes_cout = Note.objects.count()
-        self.assertEqual(notes_cout, 1)
+        self.assertEqual(self.notes_count)
         new_note = Note.objects.get()
         self.assertEqual(new_note.title, self.form_data['title'])
         self.assertEqual(new_note.text, self.form_data['text'])
@@ -41,7 +41,7 @@ class TestNoteCreation(BaseClass, TestCase):
         del self.form_data['slug']
         self.author_client.post(ADD_URL, data=self.form_data)
         note_count = Note.objects.count()
-        self.assertEqual(note_count, 1)
+        self.assertEqual(self.note_count)
         new_note = Note.objects.get()
         expected_slug = slugify(self.form_data['title'])
         self.assertEqual(new_note.slug, expected_slug)
