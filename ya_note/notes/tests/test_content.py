@@ -3,7 +3,7 @@ from django.test import TestCase
 
 from notes.forms import NoteForm
 from notes.tests.config import (
-    BaseClass,
+    BaseTestClass,
     LIST_URL,
     ADD_URL,
     EDIT_URL,
@@ -12,7 +12,7 @@ from notes.tests.config import (
 User = get_user_model()
 
 
-class TestContent(BaseClass, TestCase):
+class TestContent(BaseTestClass, TestCase):
 
     def test_note_not_in_list_for_another_user(self):
         users_notes = (
