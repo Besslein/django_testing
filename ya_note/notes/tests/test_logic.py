@@ -7,7 +7,7 @@ from pytils.translit import slugify
 from notes.forms import WARNING
 from notes.models import Note
 from notes.tests.config import (
-    BaseClass,
+    BaseTestClass,
     SUCCESS_URL,
     ADD_URL,
     EDIT_URL,
@@ -17,7 +17,7 @@ from notes.tests.config import (
 User = get_user_model()
 
 
-class TestNoteCreation(BaseClass, TestCase):
+class TestNoteCreation(BaseTestClass, TestCase):
 
     def test_user_can_create_note(self):
         Note.objects.all().delete()
