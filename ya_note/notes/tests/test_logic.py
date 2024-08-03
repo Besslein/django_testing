@@ -23,7 +23,7 @@ class TestNoteCreation(BaseTestClass, TestCase):
         Note.objects.all().delete()
         self.author_client.post(ADD_URL, data=self.form_data)
         notes_cout = Note.objects.count()
-        self.assertEqual(self.notes_count)
+        self.assertEqual(self.notes_cout)
         new_note = Note.objects.get()
         self.assertEqual(new_note.title, self.form_data['title'])
         self.assertEqual(new_note.text, self.form_data['text'])
@@ -63,7 +63,7 @@ class TestNoteCreation(BaseTestClass, TestCase):
         self.assertEqual(notes_count, Note.objects.count())
 
 
-class TestNoteEditDelete(BaseClass, TestCase):
+class TestNoteEditDelete(BaseTestClass, TestCase):
 
     def test_author_can_delete_note(self):
         notes_count_before = Note.objects.count()

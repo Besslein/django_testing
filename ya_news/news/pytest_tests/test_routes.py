@@ -11,6 +11,8 @@ SIGNUP_URL = reverse('users:signup')
 AUTHOR_CLIENT = pytest.lazy_fixture('author_client')
 READER_CLIENT = pytest.lazy_fixture('reader_client')
 DETAIL_URL = pytest.lazy_fixture('detail_url')
+EDIT_URL = pytest.lazy_fixture('edit_url')
+DELETE_URL = pytest.lazy_fixture('delete_url')
 
 
 @pytest.mark.parametrize(
