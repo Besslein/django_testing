@@ -1,6 +1,7 @@
 from django.conf import settings
 
 from news.forms import CommentForm
+from news.pytest_tests import UrlConst
 
 FORM_NAME = 'form'
 
