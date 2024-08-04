@@ -4,13 +4,6 @@ from news.forms import CommentForm
 
 FORM_NAME = 'form'
 
-URL_TO_COMMENTS = 'news:detail'
-EDIT_URL = 'news:edit'
-DELETE_URL = 'news:delete'
-NEWS_DETAIL_URL = 'news:detail'
-NEWS_HOME_URL = 'news:home'
-LOGIN_URL = 'users:login'
-
 
 def test_authorized_client_has_form(author_client, news_detail_url):
     response = author_client.get(news_detail_url)
