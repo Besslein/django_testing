@@ -7,7 +7,7 @@ from django.utils import timezone
 from news.models import Comment, News
 
 
-class Const():
+class Const:
     URL_TO_COMMENTS = 'news:detail'
     EDIT_URL = 'news:edit'
     DELETE_URL = 'news:delete'
