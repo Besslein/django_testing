@@ -7,15 +7,6 @@ from django.utils import timezone
 from news.models import Comment, News
 
 
-class UrlConst:
-    URL_TO_COMMENTS = 'news:detail'
-    EDIT_URL = 'news:edit'
-    DELETE_URL = 'news:delete'
-    NEWS_DETAIL_URL = 'news:detail'
-    NEWS_HOME_URL = 'news:home'
-    LOGIN_URL = 'users:login'
-
-
 @pytest.mark.django_db
 @pytest.fixture(autouse=True)
 def author(django_user_model):
