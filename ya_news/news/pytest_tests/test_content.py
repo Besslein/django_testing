@@ -2,6 +2,7 @@ from django.conf import settings
 
 from news.forms import CommentForm
 
+
 FORM_NAME = 'form'
 
 

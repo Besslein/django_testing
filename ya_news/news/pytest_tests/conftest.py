@@ -7,8 +7,9 @@ from django.utils import timezone
 from news.models import Comment, News
 
 
+@pytest.fixture
 class UrlConst:
-    URL_TO_COMMENT = 'news:detail'
+    URL_TO_COMMENTS = 'news:detail'
     EDIT_URL = 'news:edit'
     DELETE_URL = 'news:delete'
     NEWS_DETAIL_URL = 'news:detail'
