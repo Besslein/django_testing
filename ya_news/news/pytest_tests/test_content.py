@@ -2,6 +2,7 @@ from django.conf import settings
 
 from news.forms import CommentForm
 from .conftest import Const
+from .conftest import NEWS_DETAIL_URL, NEWS_HOME_URL
 
 
 FORM_NAME = 'form'

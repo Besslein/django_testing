@@ -6,6 +6,7 @@ from pytest_django.asserts import assertFormError, assertRedirects
 from news.forms import BAD_WORDS, WARNING
 from news.models import Comment
 from .conftest import Const
+from .conftest import NEWS_DETAIL_URL, URL_TO_COMMENTS, EDIT_URL, DELETE_URL
 
 FORM_DATA = {
     'text': 'Новый текст',
@@ -84,7 +85,7 @@ def test_other_user_cannot_edit_comment(
 
 def test_author_can_delete_comment(
         author_client,
-        delete_url,
+        Const.delete_url,
         Const.url_to_comments):
     count = Comment.objects.count() - 1
     response = author_client.delete(Const.delete_url)
