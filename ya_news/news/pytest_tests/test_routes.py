@@ -17,11 +17,15 @@ DETAIL_URL = pytest.lazy_fixture('detail_url')
     'url',
     (HOME_URL, LOGOUT_URL, SIGNUP_URL)
 )
-def test_pages_availability_for_anonymous_user(client, url, login):
+def test_pages_availability_for_anonymous_user(client, url, login_url):
     response = client.get(url)
     assert response.status_code == HTTPStatus.OK
 
 
+@pytest.mark.parametrize(
+    'url',
+    (HOME_URL)
+)
 def test_pages_availability_for_author(author_client, url, comment):
     response = author_client.get(url)
     assert response.status_code == HTTPStatus.OK
@@ -34,8 +38,10 @@ def test_pages_availability_for_author(author_client, url, comment):
         (AUTHOR_CLIENT, HTTPStatus.OK)
     ),
 )
-
-
+@pytest.mark.parametrize(
+    'url',
+    (HOME_URL)
+)
 def test_pages_availability_for_different_users(
         parametrized_client,
         url,
@@ -45,6 +51,12 @@ def test_pages_availability_for_different_users(
     assert response.status_code == expected_status
 
 
+@pytest.mark.parametrize(
+    'name, news_object',
+    (
+        (HOME_URL, pytest.lazy_fixture('news')),
+    ),
+)
 def test_redirects(client, name, news_object, login_url):
     expected_url = f'{login_url}?next={name}'
     response = client.get(name, args=(news_object.id,))
