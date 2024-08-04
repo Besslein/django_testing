@@ -13,8 +13,8 @@ def test_authorized_client_has_form(author_client, Const.news_detail_url):
     assert isinstance(response.context[FORM_NAME], CommentForm)
 
 
-def test_anonymous_client_has_no_form(client, news_detail_url):
-    response = client.get(news_detail_url)
+def test_anonymous_client_has_no_form(client, Const.news_detail_url):
+    response = client.get(Const.news_detail_url)
     assert FORM_NAME not in response.context
 
 
