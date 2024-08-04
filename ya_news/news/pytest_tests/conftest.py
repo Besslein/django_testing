@@ -3,6 +3,7 @@ from datetime import timedelta
 import pytest
 from django.conf import settings
 from django.utils import timezone
+from django.urls import reverse
 
 from news.models import Comment, News
 
@@ -15,8 +16,9 @@ def author(django_user_model):
 
 @pytest.fixture
 def author_client(author, client):
+    users_login = reverse('users:login')
     client.force_login(author)
-    return client
+    return users_login, client
 
 
 @pytest.fixture
@@ -32,12 +34,16 @@ def reader_client(reader, client):
 
 @pytest.fixture
 def news():
-    return News.objects.create(title='Заголовок', text='Текст')
+    news_1 = reverse('news:home')
+    news_2 = reverse('news:detail', args=(news.id,))
+    return news_1, news_2, News.objects.create(title='Заголовок', text='Текст')
 
 
 @pytest.fixture
 def comment(news, author):
-    return Comment.objects.create(
+    edit_url = reverse('news:edit', args=(comment.id,))
+    delete_url = reverse('news:delete', args=(comment.id,))
+    return delete_url, edit_url, Comment.objects.create(
         news=news,
         author=author,
         text='Текст комментария'
@@ -59,6 +65,7 @@ def comments(news, author):
 
 @pytest.fixture
 def news_list():
+    news_detail = reverse('news:detail', args=(news.id,))
     today = timezone.now()
     all_news = [
         News(
@@ -69,3 +76,4 @@ def news_list():
         for index in range(settings.NEWS_COUNT_ON_HOME_PAGE + 1)
     ]
     News.objects.bulk_create(all_news)
+    return news_detail
