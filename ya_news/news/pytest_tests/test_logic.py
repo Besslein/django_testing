@@ -22,7 +22,7 @@ def test_user_can_create_note(
         news,
         news_detail_url):
     initial_comment_count = Comment.objects.count()
-    url = UrlConst.NEWS_DETAIL_URL
+    url = reverse(UrlConst.NEWS_DETAIL_URL, args=(news.id,))
     response = author_client.post(url, data=FORM_DATA)
     assertRedirects(response, f'{url}#comments')
     assert Comment.objects.count() == initial_comment_count + 1
@@ -34,7 +34,7 @@ def test_user_can_create_note(
 
 def test_anonymous_user_cannot_create_note(client, news, news_detail_url):
     count = Comment.objects.count()
-    url = UrlConst.NEWS_DETAIL_URL
+    url = reverse(UrlConst.NEWS_DETAIL_URL, args=(news.id,))
     response = client.post(url, data=FORM_DATA)
     login_url = reverse('users:login')
     expected_url = f'{login_url}?next={url}'
@@ -47,7 +47,7 @@ def test_user_cannot_use_bad_words(
         news,
         news_detail_url):
     count = Comment.objects.count()
-    url = UrlConst.NEWS_DETAIL_URL
+    url = reverse(UrlConst.NEWS_DETAIL_URL, args=(news.id,))
     response = author_client.post(url, data=BAD_WORDS_DATA)
     assertFormError(response, 'form', 'text', errors=WARNING)
     assert Comment.objects.count() == count
