@@ -85,7 +85,7 @@ def test_other_user_cannot_edit_comment(
 
 def test_author_can_delete_comment(
         author_client,
-        DELETE_URL,
+        delete_url,
         url_to_comments):
     count = Comment.objects.count() - 1
     response = author_client.delete(UrlConst.DELETE_URL)
