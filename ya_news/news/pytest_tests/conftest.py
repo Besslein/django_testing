@@ -3,17 +3,18 @@ from datetime import timedelta
 import pytest
 from django.conf import settings
 from django.utils import timezone
+from django.urls import reverse
 
 from news.models import Comment, News
 
 
 class UrlConst:
-    URL_TO_COMMENTS = 'news:detail'
-    EDIT_URL = 'news:edit'
-    DELETE_URL = 'news:delete'
-    NEWS_DETAIL_URL = 'news:detail'
-    NEWS_HOME_URL = 'news:home'
-    LOGIN_URL = 'users:login'
+    URL_TO_COMMENTS = reverse('news:detail', args=(News.id,))
+    EDIT_URL = reverse('news:edit', args=(Comment.id,))
+    DELETE_URL = reverse('news:delete', args=(Comment.id,))
+    NEWS_DETAIL_URL = reverse('news:detail', args=(News.id,))
+    NEWS_HOME_URL = reverse('news:home')
+    LOGIN_URL = reverse('users:login')
 
 
 @pytest.mark.django_db
