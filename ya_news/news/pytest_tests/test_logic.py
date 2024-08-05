@@ -5,8 +5,8 @@ from pytest_django.asserts import assertFormError, assertRedirects
 
 from news.forms import BAD_WORDS, WARNING
 from news.models import Comment
-from .conftest import Const
-from .conftest import NEWS_DETAIL_URL, URL_TO_COMMENTS, EDIT_URL, DELETE_URL
+from .conftest import UrlConst
+
 
 FORM_DATA = {
     'text': 'Новый текст',
@@ -20,9 +20,9 @@ def test_user_can_create_note(
         author_client,
         author,
         news,
-        Const.news_detail_url):
+        NEWS_DETAIL_URL):
     initial_comment_count = Comment.objects.count()
-    url = Const.news_detail_url
+    url = UrlConst.NEWS_DETAIL_URL
     response = author_client.post(url, data=FORM_DATA)
     assertRedirects(response, f'{url}#comments')
     assert Comment.objects.count() == initial_comment_count + 1
@@ -32,9 +32,9 @@ def test_user_can_create_note(
     assert new_comment.author == author
 
 
-def test_anonymous_user_cannot_create_note(client, news, Const.news_detail_url):
+def test_anonymous_user_cannot_create_note(client, news, NEWS_DETAIL_URL):
     count = Comment.objects.count()
-    url = Const.news_detail_url
+    url = UrlConst.NEWS_DETAIL_URL
     response = client.post(url, data=FORM_DATA)
     login_url = reverse('users:login')
     expected_url = f'{login_url}?next={url}'
@@ -45,9 +45,9 @@ def test_anonymous_user_cannot_create_note(client, news, Const.news_detail_url):
 def test_user_cannot_use_bad_words(
         author_client,
         news,
-        Const.news_detail_url):
+        NEWS_DETAIL_URL):
     count = Comment.objects.count()
-    url = Const.news_detail_url
+    url = UrlConst.NEWS_DETAIL_URL
     response = author_client.post(url, data=BAD_WORDS_DATA)
     assertFormError(response, 'form', 'text', errors=WARNING)
     assert Comment.objects.count() == count
@@ -58,13 +58,13 @@ def test_author_can_edit_comment(
         author_client,
         news,
         comment,
-        Const.edit_url,
-        Const.url_to_comments):
+        EDIT_URL,
+        URL_TO_COMMENTS):
     response = author_client.post(
-        edit_url,
+        UrlConst.EDIT_URL,
         data=FORM_DATA
     )
-    assertRedirects(response, Const.url_to_comments)
+    assertRedirects(response, UrlConst.URL_TO_COMMENTS)
     comment_from_db = Comment.objects.get(id=comment.id)
     assert comment_from_db.text == FORM_DATA['text']
     assert comment_from_db.author == comment.author
@@ -74,8 +74,8 @@ def test_author_can_edit_comment(
 def test_other_user_cannot_edit_comment(
         reader_client,
         comment,
-        Const.edit_url):
-    response = reader_client.post(Const.edit_url, data=FORM_DATA)
+        EDIT_URL):
+    response = reader_client.post(UrlConst.EDIT_URL, data=FORM_DATA)
     assert response.status_code == HTTPStatus.NOT_FOUND
     comment_from_db = Comment.objects.get(id=comment.id)
     assert comment.text == comment_from_db.text
@@ -85,16 +85,16 @@ def test_other_user_cannot_edit_comment(
 
 def test_author_can_delete_comment(
         author_client,
-        Const.delete_url,
-        Const.url_to_comments):
+        DELETE_URL,
+        URL_TO_COMMENTS):
     count = Comment.objects.count() - 1
-    response = author_client.delete(Const.delete_url)
-    assertRedirects(response, Const.url_to_comments)
+    response = author_client.delete(UrlConst.DELETE_URL)
+    assertRedirects(response, UrlConst.URL_TO_COMMENTS)
     assert Comment.objects.count() == count
 
 
-def test_other_user_cannot_delete_comment(reader_client, Const.delete_url):
+def test_other_user_cannot_delete_comment(reader_client, DELETE_URL):
     count = Comment.objects.count()
-    response = reader_client.delete(Const.delete_url)
+    response = reader_client.delete(UrlConst.DELETE_URL)
     assert response.status_code == HTTPStatus.NOT_FOUND
     assert Comment.objects.count() == count

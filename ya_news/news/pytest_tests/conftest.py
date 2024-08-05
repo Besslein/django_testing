@@ -7,13 +7,24 @@ from django.utils import timezone
 from news.models import Comment, News
 
 
-class Const:
+class UrlConst:
     URL_TO_COMMENTS = 'news:detail'
     EDIT_URL = 'news:edit'
     DELETE_URL = 'news:delete'
     NEWS_DETAIL_URL = 'news:detail'
     NEWS_HOME_URL = 'news:home'
     LOGIN_URL = 'users:login'
+
+
+@pytest.mark.parametrize(
+    'url',
+    (UrlConst.URL_TO_COMMENTS,
+     UrlConst.EDIT_URL,
+     UrlConst.DELETE_URL,
+     UrlConst.NEWS_DETAIL_URL,
+     UrlConst.NEWS_HOME_URL,
+     UrlConst.LOGIN_URL)
+)
 
 
 @pytest.mark.django_db
