@@ -16,15 +16,6 @@ class UrlConst:
     LOGIN_URL = 'users:login'
 
 
-@pytest.mark.parametrize(
-    'url',
-    (UrlConst.URL_TO_COMMENTS,
-     UrlConst.EDIT_URL,
-     UrlConst.DELETE_URL,
-     UrlConst.NEWS_DETAIL_URL,
-     UrlConst.NEWS_HOME_URL,
-     UrlConst.LOGIN_URL)
-)
 @pytest.mark.django_db
 @pytest.fixture(autouse=True)
 def author(django_user_model):
