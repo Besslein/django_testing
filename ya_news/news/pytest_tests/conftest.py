@@ -9,10 +9,10 @@ from news.models import Comment, News
 
 
 class UrlConst:
-    URL_TO_COMMENTS = reverse('news:detail', args=(News.id,))
-    EDIT_URL = reverse('news:edit', args=(Comment.id,))
-    DELETE_URL = reverse('news:delete', args=(Comment.id,))
-    NEWS_DETAIL_URL = reverse('news:detail', args=(News.id,))
+    URL_TO_COMMENTS = reverse('news:detail')
+    EDIT_URL = reverse('news:edit')
+    DELETE_URL = reverse('news:delete')
+    NEWS_DETAIL_URL = reverse('news:detail')
     NEWS_HOME_URL = reverse('news:home')
     LOGIN_URL = reverse('users:login')
 
