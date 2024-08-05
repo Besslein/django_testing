@@ -20,7 +20,7 @@ def test_user_can_create_note(
         author_client,
         author,
         news,
-        NEWS_DETAIL_URL):
+        news_detail_url):
     initial_comment_count = Comment.objects.count()
     url = UrlConst.NEWS_DETAIL_URL
     response = author_client.post(url, data=FORM_DATA)
@@ -32,7 +32,7 @@ def test_user_can_create_note(
     assert new_comment.author == author
 
 
-def test_anonymous_user_cannot_create_note(client, news, NEWS_DETAIL_URL):
+def test_anonymous_user_cannot_create_note(client, news, news_detail_url):
     count = Comment.objects.count()
     url = UrlConst.NEWS_DETAIL_URL
     response = client.post(url, data=FORM_DATA)
@@ -45,7 +45,7 @@ def test_anonymous_user_cannot_create_note(client, news, NEWS_DETAIL_URL):
 def test_user_cannot_use_bad_words(
         author_client,
         news,
-        NEWS_DETAIL_URL):
+        news_detail_url):
     count = Comment.objects.count()
     url = UrlConst.NEWS_DETAIL_URL
     response = author_client.post(url, data=BAD_WORDS_DATA)
@@ -58,8 +58,8 @@ def test_author_can_edit_comment(
         author_client,
         news,
         comment,
-        EDIT_URL,
-        URL_TO_COMMENTS):
+        edit_url,
+        url_to_comments):
     response = author_client.post(
         UrlConst.EDIT_URL,
         data=FORM_DATA
@@ -74,7 +74,7 @@ def test_author_can_edit_comment(
 def test_other_user_cannot_edit_comment(
         reader_client,
         comment,
-        EDIT_URL):
+        edit_url):
     response = reader_client.post(UrlConst.EDIT_URL, data=FORM_DATA)
     assert response.status_code == HTTPStatus.NOT_FOUND
     comment_from_db = Comment.objects.get(id=comment.id)
@@ -86,14 +86,14 @@ def test_other_user_cannot_edit_comment(
 def test_author_can_delete_comment(
         author_client,
         DELETE_URL,
-        URL_TO_COMMENTS):
+        url_to_comments):
     count = Comment.objects.count() - 1
     response = author_client.delete(UrlConst.DELETE_URL)
     assertRedirects(response, UrlConst.URL_TO_COMMENTS)
     assert Comment.objects.count() == count
 
 
-def test_other_user_cannot_delete_comment(reader_client, DELETE_URL):
+def test_other_user_cannot_delete_comment(reader_client, delete_url):
     count = Comment.objects.count()
     response = reader_client.delete(UrlConst.DELETE_URL)
     assert response.status_code == HTTPStatus.NOT_FOUND
