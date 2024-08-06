@@ -26,7 +26,7 @@ def test_comments_order(client, comments, news):
     assert all_created == sorted_created
 
 
-def test_news_count(client, comments):
+def test_news_count(client, news_list):
     response = client.get(reverse(NEWS_HOME_URL))
     object_list = response.context['object_list']
     assert object_list.count() == settings.NEWS_COUNT_ON_HOME_PAGE
