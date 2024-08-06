@@ -3,6 +3,7 @@ from http import HTTPStatus
 import pytest
 from django.urls import reverse
 from pytest_django.asserts import assertRedirects
+from .conftest import DELETE_URL, EDIT_URL
 
 
 HOME_URL = reverse('news:home')
@@ -11,9 +12,7 @@ LOGOUT_URL = reverse('users:logout')
 SIGNUP_URL = reverse('users:signup')
 AUTHOR_CLIENT = pytest.lazy_fixture('author_client')
 READER_CLIENT = pytest.lazy_fixture('reader_client')
-DELETE_URL = pytest.lazy_fixture('delete_url')
 DETAIL_URL = pytest.lazy_fixture('detail_url')
-EDIT_URL = pytest.lazy_fixture('edit_url')
 
 
 @pytest.mark.parametrize(
