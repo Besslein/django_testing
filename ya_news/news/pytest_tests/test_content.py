@@ -9,8 +9,8 @@ FORM_NAME = 'form'
 
 def test_authorized_client_has_form(author_client):
     response = author_client.get(NEWS_DETAIL_URL)
-    assert FORM_NAME in response.context
-    assert isinstance(response.context.get('form'), CommentForm)
+    assert FORM_NAME in response.context.get('form')
+    assert isinstance(response.context.get[FORM_NAME], CommentForm)
 
 
 def test_anonymous_client_has_no_form(client, news):
