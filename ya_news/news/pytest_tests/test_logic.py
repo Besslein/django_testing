@@ -20,7 +20,7 @@ def test_user_can_create_note(
         author_client,
         author,
         news,
-        news_detail_url):
+        ):
     initial_comment_count = Comment.objects.count()
     url = reverse(NEWS_DETAIL_URL, args=(news.id,))
     response = author_client.post(url, data=FORM_DATA)
@@ -32,7 +32,7 @@ def test_user_can_create_note(
     assert new_comment.author == author
 
 
-def test_anonymous_user_cannot_create_note(client, news, news_detail_url):
+def test_anonymous_user_cannot_create_note(client, news):
     count = Comment.objects.count()
     url = reverse(NEWS_DETAIL_URL, args=(news.id,))
     response = client.post(url, data=FORM_DATA)
@@ -45,7 +45,7 @@ def test_anonymous_user_cannot_create_note(client, news, news_detail_url):
 def test_user_cannot_use_bad_words(
         author_client,
         news,
-        news_detail_url):
+        ):
     count = Comment.objects.count()
     url = reverse(NEWS_DETAIL_URL, args=(news.id,))
     response = author_client.post(url, data=BAD_WORDS_DATA)
