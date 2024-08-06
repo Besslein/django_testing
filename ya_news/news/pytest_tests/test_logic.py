@@ -59,7 +59,7 @@ def test_author_can_edit_comment(author, author_client, news, comment):
 
 
 def test_other_user_cannot_edit_comment(reader_client, comment):
-    response = reader_client.post(EDIT_URL, data=FORM_DATA)
+    response = reader_client.post(EDIT_URL, args=(comment.id,), data=FORM_DATA)
     assert response.status_code == HTTPStatus.NOT_FOUND
     comment_from_db = Comment.objects.get(id=comment.id)
     assert comment.text == comment_from_db.text
@@ -67,15 +67,15 @@ def test_other_user_cannot_edit_comment(reader_client, comment):
     assert comment.news == comment_from_db.news
 
 
-def test_author_can_delete_comment(author_client, news):
+def test_author_can_delete_comment(author_client, news, comment):
     count = Comment.objects.count() - 1
-    response = author_client.delete(DELETE_URL)
+    response = author_client.delete(DELETE_URL, args=(comment.id,))
     assertRedirects(response, URL_TO_COMMENTS, args=(news.id,))
     assert Comment.objects.count() == count
 
 
-def test_other_user_cannot_delete_comment(reader_client):
+def test_other_user_cannot_delete_comment(reader_client, comment):
     count = Comment.objects.count()
-    response = reader_client.delete(DELETE_URL)
+    response = reader_client.delete(DELETE_URL, args=(comment.id,))
     assert response.status_code == HTTPStatus.NOT_FOUND
     assert Comment.objects.count() == count
