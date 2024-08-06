@@ -9,8 +9,7 @@ FORM_NAME = 'form'
 
 def test_authorized_client_has_form(author_client):
     response = author_client.get(NEWS_DETAIL_URL)
-    assert FORM_NAME in response.context.get('form')
-    assert isinstance(response.context.get[FORM_NAME], CommentForm)
+    assert isinstance(response.context.get('form'), CommentForm)
 
 
 def test_anonymous_client_has_no_form(client, news):
@@ -26,15 +25,15 @@ def test_comments_order(client, comments):
     assert all_created == sorted_created
 
 
-def test_news_count(client):
+def test_news_count(client, news_list):
     response = client.get(NEWS_HOME_URL)
-    object_list = response.context['object_list'].count()
+    object_list = response.context['object_list']
     assert object_list.count() == settings.NEWS_COUNT_ON_HOME_PAGE
 
 
-def test_news_order(client):
+def test_news_order(client, news_list):
     response = client.get(NEWS_HOME_URL)
-    object_list = response.context['object_list'].count()
+    object_list = response.context['object_list']
     all_dates = [news.date for news in object_list]
     sorted_dates = sorted(all_dates, reverse=True)
     assert all_dates == sorted_dates
