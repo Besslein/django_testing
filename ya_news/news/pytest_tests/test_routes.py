@@ -43,7 +43,7 @@ def test_pages_availability_for_author(author_client, url, comment):
 )
 @pytest.mark.parametrize(
     'url',
-    (HOME_URL)
+    (EDIT_URL, DELETE_URL),
 )
 def test_pages_availability_for_different_users(
         parametrized_client,
@@ -57,10 +57,11 @@ def test_pages_availability_for_different_users(
 @pytest.mark.parametrize(
     'name, news_object',
     (
-        (HOME_URL, pytest.lazy_fixture('news')),
+        (EDIT_URL, pytest.lazy_fixture('news')),
+        (DELETE_URL, pytest.lazy_fixture('news')),
     ),
 )
-def test_redirects(client, name, news_object):
+def test_redirects(client, name, news_object, login_url):
     expected_url = f'{LOGIN_URL}?next={name}'
     response = client.get(name, args=(news_object.id,))
     assertRedirects(response, expected_url)
