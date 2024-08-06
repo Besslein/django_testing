@@ -25,13 +25,13 @@ def test_comments_order(client, comments, news):
     assert all_created == sorted_created
 
 
-def test_news_count(client, news_list):
+def test_news_count(client, comments):
     response = client.get(NEWS_HOME_URL)
     object_list = response.context['object_list']
     assert object_list.count() == settings.NEWS_COUNT_ON_HOME_PAGE
 
 
-def test_news_order(client, news_list):
+def test_news_order(client, news):
     response = client.get(NEWS_HOME_URL)
     object_list = response.context['object_list']
     all_dates = [news.date for news in object_list]
