@@ -4,8 +4,6 @@ import pytest
 from django.urls import reverse
 from pytest_django.asserts import assertRedirects
 
-from .conftest import LOGIN_URL, DELETE_URL, EDIT_URL
-
 
 HOME_URL = reverse('news:home')
 LOGIN_URL = reverse('users:login')
