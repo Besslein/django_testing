@@ -51,7 +51,7 @@ def test_author_can_edit_comment(author, author_client, news, comment):
         EDIT_URL,
         data=FORM_DATA
     )
-    assertRedirects(response, URL_TO_COMMENTS)
+    assertRedirects(response, URL_TO_COMMENTS, args=(news.id,))
     comment_from_db = Comment.objects.get(id=comment.id)
     assert comment_from_db.text == FORM_DATA['text']
     assert comment_from_db.author == comment.author
@@ -67,10 +67,10 @@ def test_other_user_cannot_edit_comment(reader_client, comment):
     assert comment.news == comment_from_db.news
 
 
-def test_author_can_delete_comment(author_client):
+def test_author_can_delete_comment(author_client, news):
     count = Comment.objects.count() - 1
     response = author_client.delete(DELETE_URL)
-    assertRedirects(response, URL_TO_COMMENTS)
+    assertRedirects(response, URL_TO_COMMENTS, args=(news.id,))
     assert Comment.objects.count() == count
 
 
