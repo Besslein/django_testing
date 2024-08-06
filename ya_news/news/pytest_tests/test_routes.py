@@ -3,7 +3,6 @@ from http import HTTPStatus
 import pytest
 from django.urls import reverse
 from pytest_django.asserts import assertRedirects
-from .conftest import LOGIN_URL
 
 
 HOME_URL = reverse('news:home')
@@ -21,7 +20,7 @@ EDIT_URL = pytest.lazy_fixture('edit_url')
     'url',
     (HOME_URL, LOGOUT_URL, SIGNUP_URL)
 )
-def test_pages_availability_for_anonymous_user(client, url, login_url):
+def test_pages_availability_for_anonymous_user(client, url):
     response = client.get(url)
     assert response.status_code == HTTPStatus.OK
 
@@ -61,7 +60,7 @@ def test_pages_availability_for_different_users(
         (HOME_URL, pytest.lazy_fixture('news')),
     ),
 )
-def test_redirects(client, name, news_object, login_url):
-    expected_url = f'{login_url}?next={name}'
+def test_redirects(client, name, news_object):
+    expected_url = f'{LOGIN_URL}?next={name}'
     response = client.get(name, args=(news_object.id,))
     assertRedirects(response, expected_url)
