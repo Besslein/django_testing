@@ -50,7 +50,8 @@ def test_pages_availability_for_different_users(
         url,
         comment,
         expected_status):
-    response = parametrized_client.get(url, args=(comment.id,))
+    url = reverse(url, args=(comment.id,))
+    response = parametrized_client.get(url
     assert response.status_code == expected_status
 
 
