@@ -70,7 +70,7 @@ def test_author_can_delete_comment(author_client, comment):
     count = Comment.objects.count() - 1
     url = reverse(DELETE_URL, args=(comment.id,))
     response = author_client.delete(url)
-    redirect_url = reverse(URL_TO_COMMENTS, args=(comment.id,)) + '#cpmments'
+    redirect_url = reverse(URL_TO_COMMENTS, args=(comment.id,)) + '#comments'
     assertRedirects(response, redirect_url)
     assert Comment.objects.count() == count
 
