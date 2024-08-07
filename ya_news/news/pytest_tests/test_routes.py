@@ -61,7 +61,6 @@ def test_pages_availability_for_different_users(
     ),
 )
 def test_redirects(client, name, news_object):
-    login_url = reverse(LOGIN_URL)
     url = reverse(name, args=(news_object.id,))
     expected_url = f'{login_url}?next={url}'
     response = client.get(url)
