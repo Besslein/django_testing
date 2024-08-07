@@ -8,17 +8,17 @@ FORM_NAME = 'form'
 
 
 def test_authorized_client_has_form(author_client, news):
-    response = author_client.get(NEWS_DETAIL_URL)
+    response = author_client.get(NEWS_DETAIL_URL, args=(news.id,))
     assert isinstance(response.context.get('form'), CommentForm)
 
 
 def test_anonymous_client_has_no_form(client, news):
-    response = client.get(NEWS_DETAIL_URL)
+    response = client.get(NEWS_DETAIL_URL, args=(news.id,))
     assert FORM_NAME not in response.context
 
 
 def test_comments_order(client, comments, news):
-    response = client.get(NEWS_DETAIL_URL)
+    response = client.get(NEWS_DETAIL_URL, args=(news.id,))
     all_comments = response.context['news'].comment_set.all()
     all_created = [comment.created for comment in all_comments]
     sorted_created = sorted(all_created)
