@@ -49,7 +49,6 @@ def test_pages_availability_for_author(author_client, url, comment):
 def test_pages_availability_for_different_users(
         parametrized_client,
         url,
-        comment,
         expected_status):
     response = parametrized_client.get(url)
     assert response.status_code == expected_status
