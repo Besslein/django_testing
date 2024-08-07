@@ -8,12 +8,12 @@ from django.urls import reverse
 from news.models import Comment, News
 
 
-URL_TO_COMMENTS = reverse('news:detail')
-EDIT_URL = reverse('news:edit')
-DELETE_URL = reverse('news:delete')
-NEWS_DETAIL_URL = reverse('news:detail')
-NEWS_HOME_URL = reverse('news:home')
-LOGIN_URL = reverse('users:login')
+URL_TO_COMMENTS = 'news:detail'
+EDIT_URL = 'news:edit'
+DELETE_URL = 'news:delete'
+NEWS_DETAIL_URL = 'news:detail'
+NEWS_HOME_URL = 'news:home'
+LOGIN_URL = 'users:login'
 
 
 @pytest.mark.django_db
