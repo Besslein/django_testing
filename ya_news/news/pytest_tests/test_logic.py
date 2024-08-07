@@ -68,8 +68,10 @@ def test_other_user_cannot_edit_comment(reader_client, comment):
 
 def test_author_can_delete_comment(author_client, comment):
     count = Comment.objects.count() - 1
-    response = author_client.delete(DELETE_URL, args=(comment.id,))
-    assertRedirects(response, URL_TO_COMMENTS)
+    url = reverse(DELETE_URL, args=(comment.id,))
+    response = author_client.delete(url)
+    redirect_url = reverse(URL_TO_COMMENTS, args=(comment.id,)) + '#cpmments'
+    assertRedirects(response, redirect_url)
     assert Comment.objects.count() == count
 
 

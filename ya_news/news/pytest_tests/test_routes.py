@@ -3,6 +3,7 @@ from http import HTTPStatus
 import pytest
 from django.urls import reverse
 from pytest_django.asserts import assertRedirects
+from .conftest import DELETE_URL, EDIT_URL, LOGIN_URL
 
 
 HOME_URL = reverse('news:home')
@@ -11,9 +12,6 @@ LOGOUT_URL = reverse('users:logout')
 SIGNUP_URL = reverse('users:signup')
 AUTHOR_CLIENT = pytest.lazy_fixture('author_client')
 READER_CLIENT = pytest.lazy_fixture('reader_client')
-DELETE_URL = pytest.lazy_fixture('delete_url')
-DETAIL_URL = pytest.lazy_fixture('detail_url')
-EDIT_URL = pytest.lazy_fixture('edit_url')
 
 
 @pytest.mark.parametrize(
@@ -51,18 +49,20 @@ def test_pages_availability_for_different_users(
         comment,
         expected_status):
     url = reverse(url, args=(comment.id,))
-    response = parametrized_client.get(url
+    response = parametrized_client.get(url)
     assert response.status_code == expected_status
 
 
 @pytest.mark.parametrize(
     'name, news_object',
     (
-        (EDIT_URL, pytest.lazy_fixture('news')),
-        (DELETE_URL, pytest.lazy_fixture('news')),
+        (EDIT_URL),
+        (DELETE_URL),
     ),
 )
-def test_redirects(client, name, news_object, login_url):
-    expected_url = f'{login_url}?next={name}'
-    response = client.get(name, args=(news_object.id,))
+def test_redirects(client, name, news_object):
+    login_url = reverse(LOGIN_URL)
+    url = reverse(name, args=(news_object.id,))
+    expected_url = f'{login_url}?next={url}'
+    response = client.get(url)
     assertRedirects(response, expected_url)
