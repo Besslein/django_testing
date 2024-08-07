@@ -3,6 +3,7 @@ from datetime import timedelta
 import pytest
 from django.conf import settings
 from django.utils import timezone
+from django.urls import reverse
 
 from news.models import Comment, News
 
@@ -10,8 +11,8 @@ from news.models import Comment, News
 URL_TO_COMMENTS = 'news:detail'
 EDIT_URL = 'news:edit'
 DELETE_URL = 'news:delete'
-NEWS_DETAIL_URL = 'news:detail'
-NEWS_HOME_URL = 'news:home'
+NEWS_DETAIL_URL = reverse('news:detail', args=news.id,)
+NEWS_HOME_URL = reverse('news:home')
 LOGIN_URL = 'users:login'
 
 
