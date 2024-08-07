@@ -11,7 +11,7 @@ from news.models import Comment, News
 URL_TO_COMMENTS = 'news:detail'
 EDIT_URL = 'news:edit'
 DELETE_URL = 'news:delete'
-NEWS_DETAIL_URL = reverse('news:detail', args=news.id,)
+NEWS_DETAIL_URL = reverse('news:detail', args=News.id,)
 NEWS_HOME_URL = reverse('news:home')
 LOGIN_URL = 'users:login'
 
