@@ -56,8 +56,8 @@ def test_pages_availability_for_different_users(
 @pytest.mark.parametrize(
     'name, news_object',
     (
-        (EDIT_URL),
-        (DELETE_URL),
+        (EDIT_URL, pytest.lazy_fixture('news')),
+        (DELETE_URL, pytest.lazy_fixture('news')),
     ),
 )
 def test_redirects(client, name, news_object):
