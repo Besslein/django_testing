@@ -27,13 +27,15 @@ def test_comments_order(client, comments, news):
 
 
 def test_news_count(client, news_list):
-    response = client.get(NEWS_HOME_URL)
+    url = reverse(NEWS_HOME_URL)
+    response = client.get(url)
     object_list = response.context['object_list']
     assert object_list.count() == settings.NEWS_COUNT_ON_HOME_PAGE
 
 
 def test_news_order(client, news):
-    response = client.get(NEWS_HOME_URL)
+    url = reverse(NEWS_HOME_URL)
+    response = client.get(url)
     object_list = response.context['object_list']
     all_dates = [news.date for news in object_list]
     sorted_dates = sorted(all_dates, reverse=True)
